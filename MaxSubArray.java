@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class MaxSubArray {
@@ -10,6 +9,12 @@ public class MaxSubArray {
         this.sum = sum;
         this.left = left;
         this.right = right;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "Left: " + this.left + " Right: " + this.right + " Sum: " + this.sum;
     }
 
     static MaxSubArray maxSubArray(List<Integer> arr) {
@@ -26,7 +31,7 @@ public class MaxSubArray {
         if (leftResult.sum >= rightResult.sum && leftResult.sum >= crossResult.sum) {
             return new MaxSubArray(leftResult.sum, leftResult.left, leftResult.right);
         } else if (rightResult.sum >= leftResult.sum && rightResult.sum >= crossResult.sum) {
-            return new MaxSubArray(rightResult.sum, rightResult.left, rightResult.right);
+            return new MaxSubArray(rightResult.sum, mid + rightResult.left, mid + rightResult.right);
         } else {
             return crossResult;
         }
@@ -35,7 +40,6 @@ public class MaxSubArray {
 
     // Helper function to find the max subarray to cross the middle
     static MaxSubArray maxCrossingSubArray(List<Integer> arr, int mid) {
-
         // Find the max sum on left side of the mid
         int leftSum = Integer.MIN_VALUE;
         int currSum = 0;
@@ -59,7 +63,7 @@ public class MaxSubArray {
                 rightIdx = i;
             }
         }
-        return new MaxSubArray(rightSum + rightSum, leftIdx, rightIdx);
+        return new MaxSubArray(leftSum + rightSum, leftIdx, rightIdx);
 
     }
 
@@ -67,7 +71,8 @@ public class MaxSubArray {
         List<Integer> arr = List.of(-2, 1, 3, -9, 7, 9, 4);
         MaxSubArray result = maxSubArray(arr);
         System.out.println("The array is " + arr);
-        System.out.println("The max subarray is: " + arr.subList(result.left, result.right) + " " + result.sum);
+        System.out.println(arr.subList(result.left, result.right + 1));
+        System.out.println("The max subarray is: " + result);
 
     }
 
